@@ -20,10 +20,11 @@ const revealerOptions = {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    const navbarHeight = document.querySelector('header').offsetHeight; //offset navbar
+            window.scrollTo({
+                top: target.offsetTop - navbarHeight,
+                behavior: 'smooth'
+                   });
                 }
             });
         });
@@ -43,7 +44,9 @@ const activeObserver = new IntersectionObserver(
       if (activeLink) activeLink.classList.add("active");
     });
   },
-  { threshold: 0.4 }
+  { threshold: 0.4,
+    rootMargin: "-80px 0px 0px 0px" // la navbar fixe
+  }
 );
 
 sections.forEach((section) => activeObserver.observe(section));
